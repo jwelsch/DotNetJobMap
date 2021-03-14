@@ -6,10 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="6.1.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\DotNetReflector\DotNetReflector.csproj" />
+    <PackageReference Include="Jwelsch.DotNetReflector" Version="1.0.0" />
   </ItemGroup>
 
 </Project>

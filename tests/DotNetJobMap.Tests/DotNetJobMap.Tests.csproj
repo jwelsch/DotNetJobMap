@@ -20,8 +20,4 @@
     <ProjectReference Include="..\..\src\DotNetJobMap\DotNetJobMap.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Samples\" />
-  </ItemGroup>
-
 </Project>

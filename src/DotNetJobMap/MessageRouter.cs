@@ -32,7 +32,7 @@
         {
             var messageType = message.GetType();
 
-            if (!_jobContainer.TryGet(messageType, out IJob job))
+            if (!_jobContainer.TryGet(messageType, out var job))
             {
                 throw new JobMapException($"A job that takes a message with type '{messageType.FullName}' was not found.");
             }

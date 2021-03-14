@@ -17,11 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\DotNetJobMap\DotNetJobMap.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Samples\" />
+    <ProjectReference Include="..\..\src\DotNetReflector\DotNetReflector.csproj" />
   </ItemGroup>
 
 </Project>

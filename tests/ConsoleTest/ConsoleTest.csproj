@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DotNetJobMap\DotNetJobMap.csproj" />
+    <ProjectReference Include="..\..\src\DotNetJobMap\DotNetJobMap.csproj" />
   </ItemGroup>
 
 </Project>

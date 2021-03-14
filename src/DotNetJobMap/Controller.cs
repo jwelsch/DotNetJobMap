@@ -1,4 +1,6 @@
-﻿namespace DotNetJobMap
+﻿using Autofac;
+
+namespace DotNetJobMap
 {
     public interface IController
     {
@@ -11,13 +13,20 @@
 
     public class Controller : IController
     {
+        private static IContainer Container { get; } = Registrator.Register();
+
         private readonly IMessageRouter _router;
 
         private IMessage _nextMessage;
 
+        public Controller()
+            : this(null)
+        {
+        }
+
         public Controller(IMessageRouter router)
         {
-            _router = router;
+            _router = router ?? Container.Resolve<IMessageRouter>();
         }
 
         public void AddJobs(params IJob[] jobs)

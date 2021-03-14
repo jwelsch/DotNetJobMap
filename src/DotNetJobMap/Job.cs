@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace DotNetJobMap
+﻿namespace DotNetJobMap
 {
     public interface IJob
     {

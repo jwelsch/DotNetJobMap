@@ -84,5 +84,26 @@ namespace DotNetJobMap.Tests
 
             action.Should().Throw<JobMapException>();
         }
+
+        [Fact]
+        public void When_ctor_with_message_and_jobs_is_called_then_donext_performs_job()
+        {
+            var message = Substitute.For<IMessage>();
+            var nextMessage = Substitute.For<IMessage>();
+
+            var job = Substitute.For<IJob>();
+            job.Do(message).Returns(nextMessage);
+
+            var router = Substitute.For<IMessageRouter>();
+            router.Route(message).Returns(job);
+
+            var specimen = new Controller(router, message, job, job);
+
+            var result = specimen.DoNext();
+
+            router.Received(1).Route(message);
+            job.Received(1).Do(message);
+            result.Should().Be(nextMessage);
+        }
     }
 }

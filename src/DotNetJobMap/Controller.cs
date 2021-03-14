@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using System;
 
 namespace DotNetJobMap
 {
@@ -20,13 +21,25 @@ namespace DotNetJobMap
         private IMessage _nextMessage;
 
         public Controller()
-            : this(null)
+            : this((IMessageRouter)null, null, null)
+        {
+        }
+
+        public Controller(IMessage firstMessage, params IJob[] jobs)
+            : this(null, firstMessage, jobs)
         {
         }
 
         public Controller(IMessageRouter router)
         {
             _router = router ?? Container.Resolve<IMessageRouter>();
+        }
+
+        public Controller(IMessageRouter router, IMessage firstMessage, params IJob[] jobs)
+            : this(router)
+        {
+            _nextMessage = firstMessage;
+            AddJobs(jobs);
         }
 
         public void AddJobs(params IJob[] jobs)

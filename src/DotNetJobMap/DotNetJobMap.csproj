@@ -2,11 +2,27 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>Jwelsch.DotNetJobMap</PackageId>
+    <Authors>Justin Welsch</Authors>
+    <Description>A library for decoupling code that uses reflection to route messages to jobs.</Description>
+    <Copyright>Copyright © 2021 Justin Welsch</Copyright>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageProjectUrl>https://github.com/jwelsch/DotNetJobMap</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/jwelsch/DotNetJobMap.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>.net job map</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="6.1.0" />
     <PackageReference Include="Jwelsch.DotNetReflector" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

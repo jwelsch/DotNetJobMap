@@ -2,21 +2,42 @@
 {
     public interface IMessageRouter
     {
-        IJob Route(IJobAddress address);
+        void AddJobs(params IJob[] jobs);
+
+        void RemoveJobs(params IJob[] jobs);
+
+        IJob Route(IMessage message);
     }
 
     public class MessageRouter : IMessageRouter
     {
-        private readonly IJobManager _jobManager;
+        private readonly IJobContainer _jobContainer;
 
-        public MessageRouter(IJobManager jobManager)
+        public MessageRouter(IJobContainer jobContainer)
         {
-            _jobManager = jobManager;
+            _jobContainer = jobContainer;
         }
 
-        public IJob Route(IJobAddress address)
+        public void AddJobs(params IJob[] jobs)
         {
-            return _jobManager.GetJob(address);
+            _jobContainer.Add(jobs);
+        }
+
+        public void RemoveJobs(params IJob[] jobs)
+        {
+            _jobContainer.Remove(jobs);
+        }
+
+        public IJob Route(IMessage message)
+        {
+            var messageType = message.GetType();
+
+            if (!_jobContainer.TryGet(messageType, out var job))
+            {
+                throw new JobMapException($"A job that takes a message with type '{messageType.FullName}' was not found.");
+            }
+
+            return job;
         }
     }
 }

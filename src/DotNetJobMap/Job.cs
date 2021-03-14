@@ -1,33 +1,17 @@
-﻿using System.Threading.Tasks;
-
-namespace DotNetJobMap
+﻿namespace DotNetJobMap
 {
     public interface IJob
     {
-        IJobAddress Address { get; }
-
-        Task<IMessageEnvelope> Execute(IMessagePayload payload);
+        IMessage Do(IMessage message);
     }
 
-    public abstract class Job : IJob
+    public abstract class Job<T> : IJob where T : IMessage
     {
-        private readonly IMessageEnvelopeFactory _envelopeFactory;
-        private readonly IMessagePayloadFactory _payloadFactory;
+        protected abstract IMessage Do(T message);
 
-        public IJobAddress Address { get; }
-
-        public Job(IJobAddress address, IMessageEnvelopeFactory envelopeFactory, IMessagePayloadFactory payloadFactory)
+        public IMessage Do(IMessage message)
         {
-            Address = address;
-            _envelopeFactory = envelopeFactory;
-            _payloadFactory = payloadFactory;
+            return Do((T)message);
         }
-
-        public async Task<IMessageEnvelope> Execute(IMessagePayload payload)
-        {
-            return await Execute(payload, _envelopeFactory, _payloadFactory);
-        }
-
-        protected abstract Task<IMessageEnvelope> Execute(IMessagePayload payload, IMessageEnvelopeFactory envelopeFactory, IMessagePayloadFactory payloadFactory);
     }
 }

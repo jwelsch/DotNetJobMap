@@ -105,5 +105,33 @@ namespace DotNetJobMap.Tests
             job.Received(1).Do(message);
             result.Should().Be(nextMessage);
         }
+
+        [Fact]
+        public void When_multiple_calls_to_donext_with_correct_messages_and_jobs_then_jobs_are_done()
+        {
+            var message1 = Substitute.For<IMessage>();
+            var message2 = Substitute.For<IMessage>();
+
+            var job1 = Substitute.For<IJob>();
+            job1.Do(message1).Returns(message2);
+
+            var job2 = Substitute.For<IJob>();
+            job2.Do(message2).Returns((IMessage)null);
+
+            var router = Substitute.For<IMessageRouter>();
+            router.Route(message1).Returns(job1);
+            router.Route(message2).Returns(job2);
+
+            var specimen = new Controller(router, message1, job1, job2);
+
+            specimen.DoNext();
+            var result = specimen.DoNext();
+
+            router.Received(1).Route(message1);
+            router.Received(1).Route(message2);
+            job1.Received(1).Do(message1);
+            job2.Received(1).Do(message2);
+            result.Should().BeNull();
+        }
     }
 }

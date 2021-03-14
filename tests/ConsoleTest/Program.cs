@@ -12,16 +12,15 @@ namespace ConsoleTest
                 new JobB()
             };
 
-            var controller = new Controller();
+            var controller = new Controller(new Message1(), jobs);
 
-            controller.AddJobs(jobs);
+            IMessage result;
 
-            var result = controller.DoNext(new Message1());
-
-            while (result != null)
+            do
             {
                 result = controller.DoNext();
             }
+            while (result != null);
         }
     }
 }
